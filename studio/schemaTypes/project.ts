@@ -1,3 +1,5 @@
+//look for inferring interface/type from schema
+ 
 export default {
   name: 'project',
   title: 'Projekty',
