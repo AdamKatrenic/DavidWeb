@@ -1,3 +1,7 @@
+
+
+import Image from "next/image";
+
 import Link from "next/link";
 
 export default function Home(): JSX.Element {
@@ -5,6 +9,11 @@ export default function Home(): JSX.Element {
       <main className="min-h-screen bg-black text-white">
         {/* ============================================================
           HERO SECTION
+
+
+          - menu je nižšie (mt-16)
+          - bez modrých rámčekov (len text, hover underline)
+
          ============================================================ */}
         <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
           <div className="z-10 text-center px-6">
@@ -16,7 +25,14 @@ export default function Home(): JSX.Element {
               Visual Storyteller / Photographer
             </p>
 
+
             {/* NAVIGÁCIA POD NADPISOM */}
+
+            {/* ============================================================
+              NAVIGÁCIA POD NADPISOM
+              - nižšie + bez modrých boxov
+             ============================================================ */}
+
             <nav className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-10">
               <Link
                   href="/"
@@ -24,30 +40,38 @@ export default function Home(): JSX.Element {
               >
                 DOMOV
               </Link>
+
+
+
               <Link
                   href="/about"
                   className="uppercase text-xs md:text-sm tracking-[0.35em] text-gray-200 hover:text-white transition underline-offset-8 hover:underline"
               >
                 O MNE
               </Link>
+
+
               <Link
                   href="/portfolio"
                   className="uppercase text-xs md:text-sm tracking-[0.35em] text-gray-200 hover:text-white transition underline-offset-8 hover:underline"
               >
                 PORTFOLIO
               </Link>
+
               <Link
                   href="/faq"
                   className="uppercase text-xs md:text-sm tracking-[0.35em] text-gray-200 hover:text-white transition underline-offset-8 hover:underline"
               >
                 FAQ
               </Link>
+
               <Link
                   href="/blog"
                   className="uppercase text-xs md:text-sm tracking-[0.35em] text-gray-200 hover:text-white transition underline-offset-8 hover:underline"
               >
                 BLOG
               </Link>
+
               <Link
                   href="/contact"
                   className="uppercase text-xs md:text-sm tracking-[0.35em] text-gray-200 hover:text-white transition underline-offset-8 hover:underline"
@@ -62,7 +86,11 @@ export default function Home(): JSX.Element {
         </section>
 
         {/* ============================================================
+
           SEKCIA PRE GALÉRIU (ZATIAĽ PLACEHOLDERY)
+
+          SEKCIA PRE GALÉRIU (ZATIAĽ LEN NADPIS)
+
          ============================================================ */}
         <section className="px-10 py-20">
           <h2 className="text-3xl font-light">Najnovšie práce</h2>
@@ -79,6 +107,7 @@ export default function Home(): JSX.Element {
             - napr. /portfolio/svadba-tatry-2026
          */}
         </section>
+
 
         {/* ============================================================
           KONTAKTNÝ "FOOTER" BLOK (ako na ukážke)
@@ -246,6 +275,7 @@ export default function Home(): JSX.Element {
             </div>
           </div>
         </section>
+
       </main>
   );
 }
