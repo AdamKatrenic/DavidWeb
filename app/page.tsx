@@ -1,33 +1,43 @@
 import Image from 'next/image'
+import { client, urlFor } from './sanity'
 
-export default function Home() {
+async function getProjects() {
+  const query = `*[_type == "project"] {
+    _id,
+    title,
+    mainImage,
+    "slug": slug.current
+  }`;
+  return await client.fetch(query);
+}
+
+export default async function Home() {
+  const projects = await getProjects();
+
   return (
-    <main className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
-        <div className="z-10 text-center">
-          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter uppercase">
-            David Pilar
-          </h1>
-          <p className="text-lg md:text-xl text-gray-400 mt-4 tracking-[0.2em] uppercase">
-            Visual Storyteller / Photographer
-          </p>
-        </div>
-        
-        {/* Tu bude neskôr fotka zo Sanity, teraz tam dajme tmavý gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-60" />
-      </section>
-
-      {/* Sekcia pre Galériu (zatiaľ len nadpis) */}
-      <section className="px-10 py-20">
-        <h2 className="text-3xl font-light">Najnovšie práce</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
-          {/* Tu budeme neskôr mapovať projekty */}
-          <div className="aspect-[4/5] bg-zinc-900 animate-pulse" />
-          <div className="aspect-[4/5] bg-zinc-900 animate-pulse" />
-          <div className="aspect-[4/5] bg-zinc-900 animate-pulse" />
-        </div>
-      </section>
+    <main className="min-h-screen bg-black text-white p-10">
+      <h1 className="text-5xl font-bold mb-12 tracking-tighter">PORTFÓLIO</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {projects.map((project: any) => (
+          <div key={project._id} className="group cursor-pointer">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-zinc-900">
+              {project.mainImage && (
+                <Image 
+                  src={urlFor(project.mainImage).width(800).url()} 
+                  alt={project.title}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
+            </div>
+            <div className="mt-4">
+              <h2 className="text-lg font-medium uppercase tracking-widest">{project.title}</h2>
+              <p className="text-zinc-500 text-sm">Zobraziť projekt →</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </main>
   )
 }
