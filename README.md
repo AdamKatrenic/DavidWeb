@@ -2,6 +2,18 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+From root directory install dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
 First, run the development server:
 
 ```bash
@@ -17,6 +29,35 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+## CMS (Sanity Studio)
+
+The `studio` app is a [Sanity](https://www.sanity.io) Content Studio for managing CMS content. To install and run it:
+
+```bash
+cd studio
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+Then start the studio:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open the studio URL shown in the terminal to manage content.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
