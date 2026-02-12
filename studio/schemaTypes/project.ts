@@ -28,9 +28,9 @@ export default {
       options: {
         list: [
           { title: 'Svadba', value: 'wedding' },
-          { title: 'Koncert', value: 'concert' },
-          { title: 'Portrét', value: 'portrait' },
-          { title: 'Krajina', value: 'landscape' },
+          { title: 'Stužkové', value: 'concert' },
+          { title: 'Videoklipy', value: 'portrait' },
+          { title: 'Dokumenty', value: 'landscape' },
         ],
       },
     },
