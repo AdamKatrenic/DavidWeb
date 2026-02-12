@@ -25,7 +25,6 @@ export async function getProjectBySlug(slug: string) {
   return await client.fetch(query, { slug });
 }
 
-// lib/sanity.queries.ts
 export async function getHeroPhoto() {
   const query = `*[_type == "homePage"][0] {
     title,
@@ -38,7 +37,7 @@ export async function getHeroPhoto() {
   }`;
   
   const result = await client.fetch(query);
-  return result; // Tu musíme vrátiť CELÝ objekt (title, text, image)
+  return result; 
 }
 
 export async function getHeroData() {
@@ -52,4 +51,14 @@ export async function getHeroData() {
     }
   }`;
   return await client.fetch(query);
+}
+
+export async function getSettings() {
+  const query = `*[_type == "siteSettings"][0] {
+    copyright,
+    instagram,
+    email
+  }`;
+  const result: {copyright?: string; instagram?: string; email?:string } = await client.fetch(query);
+  return result;
 }

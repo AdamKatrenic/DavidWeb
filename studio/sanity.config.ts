@@ -16,22 +16,22 @@ export default defineConfig({
         S.list()
           .title('Obsah webu')
           .items([
-            // 1. Singleton pre Úvodnú stránku
+            // SINGLETON PRE UVODNU STRANKU
             S.listItem()
               .title('Úvodná stránka')
               .id('homePage')
-              .child(
-                S.document()
-                  .schemaType('homePage')
-                  .documentId('homePage') // Pevné ID zabezpečí, že dokument je len jeden
-              ),
-            
-            S.divider(), // Vizuálna čiara na oddelenie
+              .child(S.document().schemaType('homePage').documentId('homePage')),
 
-            // 2. Ostatné typy (Projekty atď.)
-            // Odfiltrujeme homePage, aby sa nezobrazovala v zozname dvakrát
+            // SINGLETON PRE NASTAVENIE WEBU
+            S.listItem()
+              .title('Nastavenia webu (Footer)')
+              .id('siteSettings')
+              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+
+            S.divider(),
+
             ...S.documentTypeListItems().filter(
-              (listItem) => !['homePage'].includes(listItem.getId()!)
+              (listItem) => !['homePage', 'siteSettings'].includes(listItem.getId()!)
             ),
           ]),
     }),
