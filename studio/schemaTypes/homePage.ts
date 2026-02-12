@@ -2,7 +2,6 @@ export default {
     name: 'homePage',
     title: 'Úvodná stránka',
     type: 'document',
-    // Pridáme skupiny, aby David videl Content a Media oddelene
     groups: [
         { name: 'content', title: 'Obsah' },
         { name: 'media', title: 'Vizuál' },
@@ -32,7 +31,6 @@ export default {
             options: {
                 hotspot: true,
             },
-            // Pridáme políčko pre Alt text priamo k obrázku
             fields: [
                 {
                     name: 'alt',
@@ -44,7 +42,6 @@ export default {
             validation: (Rule: any) => Rule.required(),
         },
     ],
-    // Toto zabezpečí, že v zozname (ak by sa tam náhodou ukázal) uvidíme správny názov
     preview: {
         select: {
             title: 'title',

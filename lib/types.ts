@@ -15,3 +15,15 @@ export interface Project {
     description?: string;
     gallery?: SanityImage[];
 }
+
+export interface HeroData {
+  title?: string;
+  welcomeText?: string;
+  heroImage: SanityImage;
+}
+
+export interface SiteSettings {
+  copyright?: string;
+  instagram?: string;
+  email?: string;
+}

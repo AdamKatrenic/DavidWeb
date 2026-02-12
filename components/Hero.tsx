@@ -6,7 +6,7 @@ import { SanityImage } from "@/lib/types";
 interface HeroProps {
   title?: string;
   welcomeText?: string;
-  heroImage: SanityImage & { alt?:string };
+  heroImage?: SanityImage & { alt?:string };
 }
 
 export default function Hero({ title, welcomeText, heroImage }: HeroProps) {
