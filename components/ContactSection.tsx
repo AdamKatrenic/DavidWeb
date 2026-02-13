@@ -18,7 +18,7 @@ export default function ContactSection() {
             </p>
             <div className="mt-10 space-y-6">
               <div>
-                <div className="text-xs tracking-[0.3em] uppercase text-white/60">E-mail</div>
+                <div className="text-xl tracking-[0.25em] uppercase text-white/90">E-mail</div>
                 <div className="mt-2 text-sm md:text-base text-white">davidpilar@gmail.com</div>
               </div>
               <div className="pt-2 flex items-center gap-6">
