@@ -28,12 +28,12 @@ export default function Hero({ title, welcomeText, heroImage }: HeroProps) {
 
       {/* OBSAH NAD OBRÁZKOM */}
       <div className="z-10 text-center px-6">
-        <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase drop-shadow-2xl text-white">
+        <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase drop-shadow-2xl text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
           {title}
         </h1>
         
         {welcomeText && (
-          <p className="text-lg md:text-xl text-zinc-200 mt-6 tracking-[0.3em] uppercase drop-shadow-md max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-zinc-200 mt-6 tracking-[0.3em] uppercase drop-shadow-md drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] max-w-2xl mx-auto leading-relaxed">
             {welcomeText}
           </p>
         )}
@@ -44,7 +44,7 @@ export default function Hero({ title, welcomeText, heroImage }: HeroProps) {
              <Link 
                key={item} 
                href={item === 'DOMOV' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`} 
-               className="text-[10px] md:text-xs tracking-[0.4em] text-white/70 hover:text-white transition-all duration-300 hover:scale-110 uppercase"
+               className="text-[10px] md:text-xl tracking-[0.4em] text-white/70 hover:text-white transition-all duration-300 hover:scale-110 uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
              >
                {item}
              </Link>
