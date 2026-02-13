@@ -1,5 +1,5 @@
 import { client } from "@/app/sanity";
-import { Project } from "./types";
+import { HeroData, Project, SiteSettings } from "./types";
 
 export async function getProjects(): Promise<Project[]> {
   const query = `*[_type == "project"] | order(_createdAt desc) {
@@ -25,22 +25,7 @@ export async function getProjectBySlug(slug: string) {
   return await client.fetch(query, { slug });
 }
 
-export async function getHeroPhoto() {
-  const query = `*[_type == "homePage"][0] {
-    title,
-    welcomeText,
-    heroImage {
-      asset,
-      alt,
-      hotspot
-    }
-  }`;
-  
-  const result = await client.fetch(query);
-  return result; 
-}
-
-export async function getHeroData() {
+export async function getHeroData(): Promise<HeroData | null>{
   const query = `*[_type == "homePage"][0] {
     title,
     welcomeText,
@@ -53,12 +38,11 @@ export async function getHeroData() {
   return await client.fetch(query);
 }
 
-export async function getSettings() {
+export async function getSettings(): Promise<SiteSettings | null> {
   const query = `*[_type == "siteSettings"][0] {
     copyright,
     instagram,
     email
   }`;
-  const result: {copyright?: string; instagram?: string; email?:string } = await client.fetch(query);
-  return result;
+  return await client.fetch(query)
 }
