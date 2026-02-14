@@ -27,3 +27,11 @@ export interface SiteSettings {
   instagram?: string;
   email?: string;
 }
+
+export interface AboutData {
+  title?: string;
+  // Pre obrázok použijeme objekt s neznámymi vlastnosťami (unknown je bezpečnejšie ako any)
+  aboutImage?: Record<string, unknown>; 
+  // Description definujeme ako pole objektov (pre PortableText) alebo čistý string
+  description?: Record<string, unknown>[] | string; 
+}

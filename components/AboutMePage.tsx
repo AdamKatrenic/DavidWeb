@@ -1,57 +1,65 @@
 import Image from "next/image";
+import { urlFor } from "@/app/sanity";
+import { PortableText, PortableTextProps } from "@portabletext/react";
+import { AboutData } from "@/lib/types";
 
-export default function AboutMePage() {
-    return (
-        <section className="bg-black text-white border-t border-white/10">
-            <div className="mx-auto max-w-6xl px-6 py-20">
-                <div className="grid md:grid-cols-2 gap-10 items-stretch">
-                    {/* FOTO vľavo */}
-                    <div className="relative overflow-hidden border border-white/10 bg-zinc-950/60 h-[420px] md:h-[640px]">
-                        <Image
-                            src="/o-mne.jpg"
-                            alt="O mne"
-                            fill
-                            priority={false}
-                            className="object-cover object-center"
-                        />
+interface AboutMePageProps {
+  aboutData: AboutData | null;
+}
 
-                        {/* jemný gradient aby to ladilo s tmou */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/10" />
-                    </div>
+export default function AboutMePage({ aboutData }: AboutMePageProps) {
+  // Ak nemáme dáta, sekciu vôbec nevykreslíme
+  if (!aboutData) return null;
 
-                    {/* TEXT vpravo - vysoký rámček */}
-                    <div className="border border-white/10 bg-black/55 backdrop-blur-sm p-10 h-[420px] md:h-[640px] flex flex-col justify-center">
-                        <div className="space-y-6">
-                            <div className="tracking-[0.35em] text-xs text-white/80 uppercase">
-                                DAVID PILLAR
-                            </div>
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black text-white">
+      
+      {/* 1. FOTKA NA POZADÍ */}
+      {aboutData.aboutImage && (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={urlFor(aboutData.aboutImage).width(2000).url()}
+            alt={aboutData.title || "David Pilar - About"}
+            fill
+            priority
+            className="object-cover object-center opacity-50" // Nižšia opacita pre lepšiu čitateľnosť textu
+          />
+          {/* Sofistikované tmavé prechody pre "filmový" look */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+      )}
 
-                            <p className="text-base md:text-lg leading-relaxed text-zinc-200">
-                                Ahoj, volám sa David a fotografiu beriem ako spôsob, ako zachytiť moment
-                                tak, aby ho bolo cítiť aj o roky neskôr. Nie je to len o obraze — je to o
-                                atmosfére, ľuďoch a príbehu.
-                            </p>
+      {/* 2. OBSAH (Centrovaný text) */}
+      <div className="relative z-10 mx-auto max-w-4xl px-6 py-24 text-center">
+        <div className="space-y-10">
+          
+          {/* Malý nadpis / Meno */}
+          <div className="tracking-[0.6em] text-[10px] md:text-xs text-white/50 uppercase">
+            {aboutData.title || "O MNE"}
+          </div>
 
-                            <p className="text-base md:text-lg leading-relaxed text-zinc-200">
-                                Najradšej fotím prirodzene a čisto. Bez zbytočného „hraného“ pocitu.
-                                Chcem, aby si sa pri fotení cítil uvoľnene a aby výsledok vyzeral
-                                nadčasovo.
-                            </p>
+          {/* Hlavný textový blok */}
+          <div className="text-lg md:text-2xl leading-relaxed text-zinc-100 max-w-3xl mx-auto font-light italic">
+            {Array.isArray(aboutData.description) ? (
+              <PortableText 
+                value={aboutData.description as PortableTextProps['value']} 
+                components={{
+                  block: {
+                    // Pridáme medzery medzi odsekmi, aby to nebola jedna kopa textu
+                    normal: ({children}) => <p className="mb-8 last:mb-0">{children}</p>,
+                  }
+                }}
+              />
+            ) : (
+              <p>{aboutData.description}</p>
+            )}
+          </div>
 
-                            <p className="text-base md:text-lg leading-relaxed text-zinc-200">
-                                Pracujem na svadbách, portrétoch aj komerčných veciach — podľa toho, čo
-                                práve potrebuješ. Keď sa mi ozveš, dohodneme štýl, predstavu a celé to
-                                nastavíme tak, aby to dávalo zmysel.
-                            </p>
-
-                            <p className="text-base md:text-lg leading-relaxed text-zinc-200">
-                                Som zo Slovenska, ale nemám problém vycestovať. Dôležité je, aby výsledok
-                                pôsobil autenticky a aby si sa v tom našiel.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+          {/* Dekoratívna čiara na konci */}
+          <div className="w-12 h-[1px] bg-white/20 mx-auto mt-12" />
+        </div>
+      </div>
+    </section>
+  );
 }
