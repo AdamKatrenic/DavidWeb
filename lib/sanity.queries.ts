@@ -1,5 +1,5 @@
 import { client } from "@/app/sanity";
-import { HeroData, Project, SiteSettings } from "./types";
+import { HeroData, Project, SiteSettings, AboutData } from "./types";
 
 export async function getProjects(): Promise<Project[]> {
   const query = `*[_type == "project"] | order(_createdAt desc) {
@@ -45,4 +45,13 @@ export async function getSettings(): Promise<SiteSettings | null> {
     email
   }`;
   return await client.fetch(query)
+}
+
+export async function getAboutData(): Promise<AboutData | null> {
+  const query = `*[_type == "aboutSection"][0] {
+    title,
+    aboutImage,
+    description
+  }`;
+  return await client.fetch(query);
 }

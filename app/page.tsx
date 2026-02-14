@@ -4,21 +4,24 @@ import ContactSection from "@/components/ContactSection";
 import { getHeroData, getProjects, getSettings } from "@/lib/sanity.queries";
 
 export default async function Home() {
-  const [projects, heroData]= await Promise.all([
+  const [projects, heroData] = await Promise.all([
     getProjects(),
     getHeroData(),
-    getSettings(), 
+    getSettings(),
   ]);
 
   return (
     <main className="min-h-screen bg-black">
-      <Hero 
-        title= {heroData?.title}
+      <Hero
+        title={heroData?.title}
         welcomeText={heroData?.welcomeText}
         heroImage={heroData?.heroImage}
-      /> 
-      
-      <PortfolioGrid projects={projects} />
+      />
+
+      <div id="portfolio">
+        <PortfolioGrid projects={projects} />
+      </div>
+
       <ContactSection />
     </main>
   );

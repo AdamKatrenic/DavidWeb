@@ -16,13 +16,19 @@ export default defineConfig({
         S.list()
           .title('Obsah webu')
           .items([
-            // SINGLETON PRE UVODNU STRANKU
+            // 1. SINGLETON PRE UVODNU STRANKU
             S.listItem()
               .title('Úvodná stránka')
               .id('homePage')
               .child(S.document().schemaType('homePage').documentId('homePage')),
 
-            // SINGLETON PRE NASTAVENIE WEBU
+            // 2. SINGLETON PRE SEKCIU O MNE
+            S.listItem()
+              .title('O mne')
+              .id('aboutSection')
+              .child(S.document().schemaType('aboutSection').documentId('aboutSection')),
+
+            // 3. SINGLETON PRE NASTAVENIE WEBU
             S.listItem()
               .title('Nastavenia webu (Footer)')
               .id('siteSettings')
@@ -30,8 +36,9 @@ export default defineConfig({
 
             S.divider(),
 
+            // Ostatné typy (napr. Projekty), odfiltrujeme všetky singletony
             ...S.documentTypeListItems().filter(
-              (listItem) => !['homePage', 'siteSettings'].includes(listItem.getId()!)
+              (listItem) => !['homePage', 'siteSettings', 'aboutSection'].includes(listItem.getId()!)
             ),
           ]),
     }),
