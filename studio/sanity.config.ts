@@ -28,17 +28,27 @@ export default defineConfig({
               .id('aboutSection')
               .child(S.document().schemaType('aboutSection').documentId('aboutSection')),
 
-            // 3. SINGLETON PRE NASTAVENIE WEBU
+            // 3. SINGLETON PRE KONTAKTNÚ SEKCIU (TOTO SME PRIDALI)
+            S.listItem()
+              .title('Kontaktná sekcia')
+              .id('contactSectionV2')
+              .child(
+                S.document()
+                .schemaType('contactSection')
+                .documentId('contactSectionV2')
+              ),
+
+            // 4. SINGLETON PRE NASTAVENIE WEBU
             S.listItem()
               .title('Nastavenia webu (Footer)')
               .id('siteSettings')
-              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+              .child(S.document().schemaType('siteSettings')
+              .documentId('siteSettings')),
 
             S.divider(),
 
-            // Ostatné typy (napr. Projekty), odfiltrujeme všetky singletony
             ...S.documentTypeListItems().filter(
-              (listItem) => !['homePage', 'siteSettings', 'aboutSection'].includes(listItem.getId()!)
+              (listItem) => !['homePage', 'siteSettings', 'aboutSection', 'contactSection'].includes(listItem.getId()!)
             ),
           ]),
     }),
