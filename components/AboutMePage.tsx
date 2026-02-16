@@ -8,8 +8,15 @@ interface AboutMePageProps {
 }
 
 export default function AboutMePage({ aboutData }: AboutMePageProps) {
-  // Ak nemáme dáta, sekciu vôbec nevykreslíme
-  if (!aboutData) return null;
+
+  if (!aboutData) {
+    return (
+      <div className="h-[50vh] flex flex-col items-center justify-center bg-zinc-950 text-zinc-500 border border-dashed border-zinc-800 m-10">
+        <p className="text-sm tracking-widest uppercase">Dáta pre sekciu o mne sa nenačítali</p>
+        <span className="text-[10px] mt-2 opacity-50">Skontroluj Sanity Studio alebo Query</span>
+      </div>
+    );
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black text-white">
@@ -19,7 +26,7 @@ export default function AboutMePage({ aboutData }: AboutMePageProps) {
         <div className="absolute inset-0 z-0">
           <Image
             src={urlFor(aboutData.aboutImage).width(2000).url()}
-            alt={aboutData.title || "David Pilar - About"}
+            alt={aboutData.title}
             fill
             priority
             className="object-cover object-center opacity-50" // Nižšia opacita pre lepšiu čitateľnosť textu
@@ -36,7 +43,7 @@ export default function AboutMePage({ aboutData }: AboutMePageProps) {
           
           {/* Malý nadpis / Meno */}
           <div className="tracking-[0.6em] text-[10px] md:text-xs text-white/50 uppercase">
-            {aboutData.title || "O MNE"}
+            {aboutData.title}
           </div>
 
           {/* Hlavný textový blok */}

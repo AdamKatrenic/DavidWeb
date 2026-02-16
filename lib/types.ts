@@ -29,9 +29,7 @@ export interface SiteSettings {
 }
 
 export interface AboutData {
-  title?: string;
-  // Pre obrázok použijeme objekt s neznámymi vlastnosťami (unknown je bezpečnejšie ako any)
-  aboutImage?: Record<string, unknown>; 
-  // Description definujeme ako pole objektov (pre PortableText) alebo čistý string
-  description?: Record<string, unknown>[] | string; 
+  title: string; 
+  aboutImage?: Record<string, unknown>;
+  description?: Record<string, unknown>[] | string;
 }

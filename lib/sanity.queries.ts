@@ -48,7 +48,7 @@ export async function getSettings(): Promise<SiteSettings | null> {
 }
 
 export async function getAboutData(): Promise<AboutData | null> {
-  const query = `*[_type == "aboutSection"][0] {
+  const query = `*[_id == "aboutSection"][0] {
     title,
     aboutImage,
     description

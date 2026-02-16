@@ -1,3 +1,5 @@
+import { Rule } from 'sanity' 
+
 export default {
   name: 'aboutSection',
   title: 'O mne',
@@ -7,6 +9,7 @@ export default {
       name: 'title',
       title: 'Titulok',
       type: 'string',
+      validation: (rule: Rule) => rule.required().error('Názov sekcie je povinný.')
     },
     {
       name: 'aboutImage',
