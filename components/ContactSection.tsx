@@ -11,8 +11,6 @@ interface ContactSectionProps {
 type Status = null | "ok" | "err";
 
 export default function ContactSection({ content, settings }: ContactSectionProps) {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-
   if (!settings) return null;
 
   const title: string = content?.title || "Poďme spolu \n niečo vytvoriť";
@@ -64,6 +62,46 @@ export default function ContactSection({ content, settings }: ContactSectionProp
       setLoading(false);
     }
   }
+
+  return (
+      <section id="kontakt" className="bg-black text-white py-24 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+            <div className="lg:col-span-5 space-y-12">
+              <div>
+                <h2 className="title text-4xl md:text-5xl font-bold tracking-tighter uppercase italic whitespace-pre-line">
+                  {title}
+                </h2>
+                <p className="text mt-6 text-zinc-400 font-light leading-relaxed max-w-sm">{text}</p>
+              </div>
+
+              <div className="space-y-8">
+                <div className="group">
+                  <p className="text-[10px] tracking-[0.3em] text-zinc-600 uppercase mb-1">E-mail</p>
+                  <a
+                      href={`mailto:${settings.email}`}
+                      className="text-lg md:text-xl font-light hover:text-zinc-400 transition-colors"
+                  >
+                    {settings.email}
+                  </a>
+                </div>
+
+                {settings.instagram && (
+                    <div>
+                      <p className="text-[10px] tracking-[0.3em] text-zinc-600 uppercase mb-3">Sociálne siete</p>
+                      <a
+                          href={settings.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-block px-6 py-2 border border-white/10 rounded-full text-xs tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500"
+                      >
+                        Instagram
+                      </a>
+                    </div>
+                )}
+              </div>
+            </div>
+
             <div className="lg:col-span-7 bg-zinc-900/30 p-8 md:p-12 rounded-2xl border border-white/5">
               <form onSubmit={onSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                 {fields.map((f) => (
