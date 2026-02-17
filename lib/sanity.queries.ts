@@ -1,12 +1,12 @@
 import { client } from "@/app/sanity";
 import { defineQuery } from "next-sanity";
 
-export const PROJECTS_QUERY =
-  defineQuery(`*[_type == "project"] | order(_createdAt desc) {
+export const PROJECTS_QUERY = defineQuery(`*[_type == "project"] | order(_createdAt desc) {
   _id,
   title,
   mainImage,
-  "slug": slug.current
+  slug,
+  category
 }`);
 
 export const PROJECT_BY_SLUG_QUERY =
@@ -43,9 +43,15 @@ export const CONTACT_QUERY = defineQuery(`*[_id == "contactSectionV2"][0] {
   submitButtonText
 }`);
 
+export const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0] {
+  title,
+  subtitle
+}`);
+
 export const getProjects = () => client.fetch(PROJECTS_QUERY);
-export const getProjectBySlug = (slug: string) =>client.fetch(PROJECT_BY_SLUG_QUERY);
+export const getProjectBySlug = (slug: string) => client.fetch(PROJECT_BY_SLUG_QUERY, { slug });
 export const getHeroData = () => client.fetch(HERO_QUERY);
 export const getSettings = () => client.fetch(SETTINGS_QUERY);
 export const getAboutData = () => client.fetch(ABOUT_QUERY);
 export const getContactData = () => client.fetch(CONTACT_QUERY);
+export const getNavbar = () => client.fetch(NAVBAR_QUERY);
