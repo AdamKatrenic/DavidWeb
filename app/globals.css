@@ -28,3 +28,22 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 5px; /* Tenučký pásik */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000; /* Čierne pozadie dráhy */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #27272a; /* Tmavosivá farba bežca (zinc-800) */
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52525b; /* Pri hoveri trocha zosvetlie */
+  }
+}

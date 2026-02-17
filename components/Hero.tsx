@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/app/sanity";
 import { HERO_QUERY_RESULT } from "@/lib/sanity.types";
@@ -9,59 +8,46 @@ interface HeroProps {
 
 export default function Hero({ data }: HeroProps) {
   if (!data) {
-    throw new Error("Hero data not found in Sanity. Please check your 'homePage' document.");
+    throw new Error("Hero data not found in Sanity.");
   }
 
-  const getHref = (item: string) => {
-    switch (item) {
-      case 'DOMOV': return '/';
-      case 'O MNE': return '/o-mne';
-      case 'PORTFOLIO': return '/#portfolio';
-      case 'KONTAKT': return '/#kontakt';
-      case 'BOOKING': return '/booking';
-      default: return '/';
-    }
-  };
-
   return (
-    <section className="relative h-[85vh] flex items-center justify-center overflow-hidden bg-zinc-950">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* 1. Fotka/Video na celé pozadie */}
       {data.heroImage?.asset && (
-        <Image
-          src={urlFor(data.heroImage).width(2000).url()}
-          alt={data.title || "David Pilar Photography Hero"}
-          fill
-          priority
-          className="object-cover object-center"
-        />
+        <div className="absolute inset-0 scale-105 animate-slow-zoom">
+          <Image
+            src={urlFor(data.heroImage).width(2000).url()}
+            alt={data.title || "David Pilar Hero"}
+            fill
+            priority
+            className="object-cover object-center brightness-[0.7]"
+          />
+        </div>
       )}
 
-      <div className="absolute inset-0 bg-black/40" />
+      {/* 2. Prekrytie pre hĺbku a kontrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black" />
 
+      {/* 3. Hlavný obsah - Teraz bezpečne viditeľný */}
       <div className="z-10 text-center px-6">
-        <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
+        <h1 className="text-5xl md:text-[10rem] font-bold tracking-[-0.05em] uppercase text-white leading-none drop-shadow-2xl">
           {data.title}
         </h1>
         
         {data.welcomeText && (
-          <p className="text-lg md:text-xl text-zinc-200 mt-6 tracking-[0.3em] uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] max-w-2xl mx-auto leading-relaxed">
-            {data.welcomeText}
-          </p>
+          <div className="mt-4">
+            <p className="text-[10px] md:text-[12px] text-zinc-300 tracking-[1em] uppercase">
+              {data.welcomeText}
+            </p>
+          </div>
         )}
-
-        <nav className="mt-16 flex flex-wrap items-center justify-center gap-8 md:gap-12">
-          {['DOMOV', 'O MNE', 'PORTFOLIO', 'KONTAKT', 'BOOKING'].map((item) => (
-             <Link 
-               key={item} 
-               href={getHref(item)} 
-               className="text-[10px] md:text-sm tracking-[0.4em] text-white/70 hover:text-white transition-all duration-300 hover:scale-110 uppercase drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] font-medium"
-             >
-               {item}
-             </Link>
-          ))}
-        </nav>
       </div>
 
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent" />
+      {/* 4. Indikátor scrollu (jemný detail) */}
+      <div className="absolute bottom-12 flex flex-col items-center gap-4 opacity-50">
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent animate-pulse" />
+      </div>
     </section>
   );
 }

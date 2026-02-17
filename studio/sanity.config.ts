@@ -16,6 +16,18 @@ export default defineConfig({
         S.list()
           .title('Obsah webu')
           .items([
+            // 0. SINGLETON PRE NAVBAR (BRANDING)
+            S.listItem()
+              .title('Navbar (Branding)')
+              .id('navbar')
+              .child(
+                S.document()
+                  .schemaType('navbar')
+                  .documentId('navbar')
+              ),
+
+            S.divider(),
+
             // 1. SINGLETON PRE UVODNU STRANKU
             S.listItem()
               .title('Úvodná stránka')
@@ -28,7 +40,7 @@ export default defineConfig({
               .id('aboutSection')
               .child(S.document().schemaType('aboutSection').documentId('aboutSection')),
 
-            // 3. SINGLETON PRE KONTAKTNÚ SEKCIU (TOTO SME PRIDALI)
+            // 3. SINGLETON PRE KONTAKTNÚ SEKCIU
             S.listItem()
               .title('Kontaktná sekcia')
               .id('contactSectionV2')
@@ -47,8 +59,9 @@ export default defineConfig({
 
             S.divider(),
 
+            // Ostatné dokumenty (napr. Projekty), ktoré nie sú singletony
             ...S.documentTypeListItems().filter(
-              (listItem) => !['homePage', 'siteSettings', 'aboutSection', 'contactSection'].includes(listItem.getId()!)
+              (listItem) => !['homePage', 'siteSettings', 'aboutSection', 'contactSection', 'navbar'].includes(listItem.getId()!)
             ),
           ]),
     }),

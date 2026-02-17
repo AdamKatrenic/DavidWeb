@@ -1,27 +1,23 @@
 import Hero from "@/components/Hero";
-import PortfolioGrid from "@/components/PortfolioGrid";
 import ContactSection from "@/components/ContactSection";
-import { getHeroData, getProjects, getSettings, getContactData  } from "@/lib/sanity.queries";
+import { getHeroData, getSettings, getContactData } from "@/lib/sanity.queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [projects, heroData, settingsData, contactData] = await Promise.all([
-    getProjects(),
+  const [heroData, settingsData, contactData] = await Promise.all([
     getHeroData(),
     getSettings(),
-    getContactData(), 
+    getContactData(),
   ]);
 
   return (
     <main className="min-h-screen bg-black">
       <Hero data={heroData} />
 
-      <div id="portfolio">
-        <PortfolioGrid projects={projects} />
-      </div>
-
-      <ContactSection content={contactData} settings={settingsData} />
+      <section id="kontakt">
+        <ContactSection content={contactData} settings={settingsData} />
+      </section>
     </main>
   );
 }
