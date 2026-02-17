@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -22,6 +23,23 @@ export default function Navbar() {
     { name: "O mne", href: "/o-mne" },
     { name: "Kontakt", href: "/#kontakt" },
   ];
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#")) {
+      e.preventDefault();
+      const targetId = href.replace("/#", "");
+      
+      if (pathname === '/') {
+        // Sme na domovskej stránke - plynulý scroll
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        router.push(href);
+      }
+    }
+  };
 
   return (
     <nav 
@@ -50,6 +68,7 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={`text-[10px] uppercase tracking-[0.3em] transition-all duration-300 hover:text-white relative pb-1 ${
                   isActive ? "text-white" : "text-zinc-500"
                 }`}
@@ -63,8 +82,13 @@ export default function Navbar() {
           })}
         </div>
 
+        {/* Mobile Contact Button */}
         <div className="md:hidden">
-            <Link href="/#kontakt" className="text-[9px] tracking-[0.3em] border border-white/20 px-4 py-2 uppercase hover:bg-white hover:text-black transition-all">
+            <Link 
+              href="/#kontakt" 
+              onClick={(e) => handleNavClick(e, "/#kontakt")}
+              className="text-[9px] tracking-[0.3em] border border-white/20 px-4 py-2 uppercase hover:bg-white hover:text-black transition-all"
+            >
                 Kontakt
             </Link>
         </div>
