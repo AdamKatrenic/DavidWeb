@@ -1,5 +1,7 @@
+import type { Rule } from "sanity";
+
 //look for inferring interface/type from schema
- 
+
 export default {
   name: 'project',
   title: 'Projekty',
@@ -9,7 +11,8 @@ export default {
       name: 'title',
       title: 'Názov projektu',
       type: 'string',
-      validation: (Rule: any) => Rule.required().error('Musíš zadať názov, inak to nefunguje'),
+      validation: (rule: Rule) =>
+        rule.required().error('Musíš zadať názov, inak to nefunguje'),
     },
     {
       name: 'slug',
@@ -19,7 +22,7 @@ export default {
         source: 'title', // Automaticky vygeneruje slug z názvu
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (rule: Rule) => rule.required(),
     },
     {
       name: 'category',

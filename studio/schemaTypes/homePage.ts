@@ -1,3 +1,5 @@
+import type { Rule } from "sanity";
+
 export default {
     name: 'homePage',
     title: 'Úvodná stránka',
@@ -13,7 +15,7 @@ export default {
             type: 'string',
             group: 'content',
             initialValue: 'David Pilar',
-            validation: (Rule: any) => Rule.required().min(3).max(50),
+            validation: (rule: Rule) => rule.required().min(3).max(50),
         },
         {
             name: 'welcomeText',
@@ -39,7 +41,7 @@ export default {
                     description: 'Dôležité pre Google a slabozrakých (napr. Portrét fotografa v štúdiu).',
                 }
             ],
-            validation: (Rule: any) => Rule.required(),
+            validation: (rule: Rule) => rule.required(),
         },
     ],
     preview: {

@@ -1,57 +1,51 @@
 import { client } from "@/app/sanity";
-import { HeroData, Project, SiteSettings, AboutData } from "./types";
+import { defineQuery } from "next-sanity";
 
-export async function getProjects(): Promise<Project[]> {
-  const query = `*[_type == "project"] | order(_createdAt desc) {
-    _id,
-    title,
-    mainImage,
-    "slug": slug.current
-  }`;
-  
-  return await client.fetch(query);
-}
+export const PROJECTS_QUERY =
+  defineQuery(`*[_type == "project"] | order(_createdAt desc) {
+  _id,
+  title,
+  mainImage,
+  "slug": slug.current
+}`);
 
-export async function getProjectBySlug(slug: string) {
-  const query = `*[_type == "project" && slug.current == $slug][0] {
-    _id,
-    title,
-    description,
-    mainImage,
-    gallery,
-    "slug": slug.current
-  }`;
+export const PROJECT_BY_SLUG_QUERY =
+  defineQuery(`*[_type == "project" && slug.current == $slug][0] {
+  _id,
+  title,
+  description,
+  mainImage,
+  gallery,
+  "slug": slug.current
+}`);
 
-  return await client.fetch(query, { slug });
-}
+export const HERO_QUERY = defineQuery(`*[_type == "homePage"][0] {
+  title,
+  welcomeText,
+  heroImage
+}`);
 
-export async function getHeroData(): Promise<HeroData | null>{
-  const query = `*[_type == "homePage"][0] {
-    title,
-    welcomeText,
-    "heroImage": {
-      "asset": heroImage.asset,
-      "alt": heroImage.alt,
-      "hotspot": heroImage.hotspot
-    }
-  }`;
-  return await client.fetch(query);
-}
+export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0] {
+  copyright,
+  instagram,
+  email
+}`);
 
-export async function getSettings(): Promise<SiteSettings | null> {
-  const query = `*[_type == "siteSettings"][0] {
-    copyright,
-    instagram,
-    email
-  }`;
-  return await client.fetch(query)
-}
+export const ABOUT_QUERY = defineQuery(`*[_type == "aboutSection"][0] {
+  title,
+  aboutImage,
+  description
+}`);
 
-export async function getAboutData(): Promise<AboutData | null> {
-  const query = `*[_id == "aboutSection"][0] {
-    title,
-    aboutImage,
-    description
-  }`;
-  return await client.fetch(query);
-}
+export const CONTACT_QUERY = defineQuery(`*[_id == "contactSectionV2"][0] {
+  title,
+  text,
+  submitButtonText
+}`);
+
+export const getProjects = () => client.fetch(PROJECTS_QUERY);
+export const getProjectBySlug = (slug: string) =>client.fetch(PROJECT_BY_SLUG_QUERY);
+export const getHeroData = () => client.fetch(HERO_QUERY);
+export const getSettings = () => client.fetch(SETTINGS_QUERY);
+export const getAboutData = () => client.fetch(ABOUT_QUERY);
+export const getContactData = () => client.fetch(CONTACT_QUERY);

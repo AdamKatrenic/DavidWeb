@@ -1,0 +1,8 @@
+{
+  "path": "../lib/**/*.ts",
+  "schema": "schema.json",
+  "generates": "../lib/sanity.types.ts",
+  "overload": {
+    "clientReturn": true
+  }
+}

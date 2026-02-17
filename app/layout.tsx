@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { getSettings } from "@/lib/sanity.queries";
 import Footer from "@/components/Footer"; 
+import Navbar from "@/components/Navbar"; 
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "David Pilar Photography",
+  title: "Dávid Pillár Photography",
   description: "Profesionálny fotograf",
 };
 
@@ -27,16 +28,15 @@ export default async function RootLayout({
   const settings = await getSettings();
 
   return (
-    <html lang="sk">
+    <html lang="sk" className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
       >
+        <Navbar />
+        
         {children}
-        <Footer 
-          copyright={settings?.copyright} 
-          instagram={settings?.instagram}
-          email={settings?.email}
-        />
+
+        <Footer settings={settings} />
       </body>
     </html>
   );
