@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { CONTACT_QUERY_RESULT, SETTINGS_QUERY_RESULT } from "@/lib/sanity.types";
 
 interface ContactSectionProps {
@@ -6,6 +9,8 @@ interface ContactSectionProps {
 }
 
 export default function ContactSection({ content, settings }: ContactSectionProps) {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
   if (!settings) return null;
 
   const title = content?.title || "Poďme spolu \n niečo vytvoriť";
@@ -18,6 +23,32 @@ export default function ContactSection({ content, settings }: ContactSectionProp
     { label: 'Telefón', name: 'phone', type: 'tel', placeholder: '+421 ...' },
     { label: 'Miesto fotenia', name: 'location', type: 'text', placeholder: 'Bratislava, Praha...' },
   ];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        (e.target as HTMLFormElement).reset(); // Vyčistí formulár po úspechu
+        setTimeout(() => setStatus('idle'), 5000); // Po 5s vráti tlačidlo do pôvodného stavu
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
 
   return (
     <section id="kontakt" className="bg-black text-white py-24 border-t border-white/5">
@@ -62,13 +93,15 @@ export default function ContactSection({ content, settings }: ContactSectionProp
           </div>
 
           <div className="lg:col-span-7 bg-zinc-900/30 p-8 md:p-12 rounded-2xl border border-white/5">
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
               {fields.map((f) => (
                 <div key={f.name} className="relative group">
                   <label className="text-[10px] tracking-[0.2em] uppercase text-zinc-500 transition-colors group-focus-within:text-white">
                     {f.label}
                   </label>
                   <input 
+                    name={f.name}
+                    required
                     className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light"
                     type={f.type} 
                     placeholder={f.placeholder}
@@ -81,17 +114,32 @@ export default function ContactSection({ content, settings }: ContactSectionProp
                   Vaša správa
                 </label>
                 <textarea 
+                  name="message"
+                  required
                   className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light min-h-[100px] resize-none"
                   placeholder="Napíšte mi viac o vašej predstave..."
                 />
               </div>
 
               <div className="md:col-span-2 pt-4">
-                <button className="submitButton relative group overflow-hidden bg-white text-black px-12 py-4 uppercase tracking-[0.2em] text-[10px] font-bold transition-all hover:pr-16">
-                  <span className="relative z-10">{btnText}</span>
-                  <span className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    →
+                <button 
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className={`submitButton relative group overflow-hidden px-12 py-4 uppercase tracking-[0.2em] text-[10px] font-bold transition-all
+                    ${status === 'success' ? 'bg-green-600 text-white' : 'bg-white text-black hover:pr-16'}
+                    ${status === 'loading' ? 'opacity-70 cursor-not-allowed' : ''}
+                  `}
+                >
+                  <span className="relative z-10">
+                    {status === 'loading' ? 'Odosielam...' : 
+                     status === 'success' ? 'Správa odoslaná!' : 
+                     status === 'error' ? 'Chyba! Skúste znova' : btnText}
                   </span>
+                  {status === 'idle' && (
+                    <span className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      →
+                    </span>
+                  )}
                 </button>
               </div>
             </form>
