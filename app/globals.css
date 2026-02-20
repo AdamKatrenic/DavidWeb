@@ -47,3 +47,13 @@ html {
     background: #52525b; /* Pri hoveri trocha zosvetlie */
   }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
