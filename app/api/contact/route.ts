@@ -7,10 +7,11 @@ type Payload = {
     email: string;
     phone?: string;
     location?: string;
+    date?: string; // ✅ datepicker dátum
     message: string;
 };
 
-export async function POST(req: Request) {
+export async function POST(req: Request): Promise<Response> {
     try {
         const apiKey = process.env.RESEND_API_KEY;
         const to = process.env.CONTACT_TO_EMAIL;
@@ -26,21 +27,27 @@ export async function POST(req: Request) {
             return Response.json({ error: "Missing required fields" }, { status: 400 });
         }
 
+        if (body.date && typeof body.date !== "string") {
+            return Response.json({ error: "Invalid date" }, { status: 400 });
+        }
+
         const resend = new Resend(apiKey);
 
         const subject = `Dopyt z webu: ${body.name}`;
+
         const html = `
-      <div style="font-family: Arial, sans-serif; line-height: 1.4">
-        <h2>Nový dopyt z webu</h2>
-        <p><b>Meno:</b> ${escapeHtml(body.name)}</p>
-        <p><b>Email:</b> ${escapeHtml(body.email)}</p>
-        <p><b>Telefón:</b> ${escapeHtml(body.phone || "-")}</p>
-        <p><b>Miesto fotenia:</b> ${escapeHtml(body.location || "-")}</p>
-        <hr />
-        <p><b>Správa:</b></p>
-        <p>${escapeHtml(body.message).replace(/\n/g, "<br/>")}</p>
-      </div>
-    `;
+<div style="font-family: Arial, sans-serif; line-height: 1.4">
+  <h2>Nový dopyt z webu</h2>
+  <p><b>Meno:</b> ${escapeHtml(body.name)}</p>
+  <p><b>Email:</b> ${escapeHtml(body.email)}</p>
+  <p><b>Telefón:</b> ${escapeHtml(body.phone || "-")}</p>
+  <p><b>Miesto fotenia:</b> ${escapeHtml(body.location || "-")}</p>
+  <p><b>Preferovaný dátum:</b> ${escapeHtml(body.date || "-")}</p>
+  <hr />
+  <p><b>Správa:</b></p>
+  <p>${escapeHtml(body.message).replace(/\n/g, "<br/>")}</p>
+</div>
+`.trim();
 
         const { data, error } = await resend.emails.send({
             from,
@@ -50,7 +57,7 @@ export async function POST(req: Request) {
             replyTo: body.email,
         });
 
-        if (error) return Response.json({ error }, { status: 500 });
+        if (error) return Response.json(error, { status: 500 });
 
         return Response.json({ ok: true, id: data?.id }, { status: 200 });
     } catch (e) {
@@ -58,7 +65,7 @@ export async function POST(req: Request) {
     }
 }
 
-function escapeHtml(str: string) {
+function escapeHtml(str: string): string {
     return str
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
