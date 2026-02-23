@@ -4,6 +4,7 @@ import project from './project'
 import siteSettings from './siteSettings'
 import contactSection from './contactSection'
 import navbar from './navbar'
+import aboutShort from './aboutShort'
 
 export const schemaTypes = [
     project,
@@ -12,4 +13,5 @@ export const schemaTypes = [
     aboutSection,
     contactSection,
     navbar,
+    aboutShort,
 ]

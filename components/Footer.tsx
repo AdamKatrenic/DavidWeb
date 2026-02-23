@@ -46,6 +46,32 @@ export default function Footer({ settings }: FooterProps) {
             </Link>
           )}
 
+          {settings.facebook && (
+            <Link 
+              href={settings.facebook} 
+              target="_blank" 
+              className="group"
+            >
+              <p className="text-[10px] tracking-[0.4em] text-zinc-500 group-hover:text-white transition-colors duration-500 uppercase">
+                FACEBOOK
+              </p>
+              <div className="h-[1px] w-0 group-hover:w-full bg-white transition-all duration-500 mt-1 mx-auto" />
+            </Link>
+          )}
+
+          {settings.youtube && (
+            <Link 
+              href={settings.youtube} 
+              target="_blank" 
+              className="group"
+            >
+              <p className="text-[10px] tracking-[0.4em] text-zinc-500 group-hover:text-white transition-colors duration-500 uppercase">
+                YOUTUBE
+              </p>
+              <div className="h-[1px] w-0 group-hover:w-full bg-white transition-all duration-500 mt-1 mx-auto" />
+            </Link>
+          )}
+
           <button 
             onClick={scrollToContact}
             className="group outline-none border-none bg-transparent cursor-pointer"

@@ -295,6 +295,8 @@ export type HERO_QUERY_RESULT = {
 export type SETTINGS_QUERY_RESULT = {
   copyright: string | null;
   instagram: string | null;
+  facebook: string | null;
+  youtube: string | null;
   email: string | null;
 } | null;
 

@@ -15,6 +15,16 @@ export default {
       type: 'url',
     },
     {
+      name: 'facebook',
+      title: 'Facebook URL',
+      type: 'url',
+    },
+    {
+      name: 'youtube',
+      title: 'YouTube URL',
+      type: 'url',
+    },
+    {
       name: 'email',
       title: 'Kontaktný e-mail',
       type: 'string',
