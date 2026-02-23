@@ -34,11 +34,17 @@ export default defineConfig({
               .id('homePage')
               .child(S.document().schemaType('homePage').documentId('homePage')),
 
-            // 2. SINGLETON PRE SEKCIU O MNE
+            // 2. SINGLETON PRE SEKCIU O MNE (HLAVNÁ PODSTRÁNKA)
             S.listItem()
-              .title('O mne')
+              .title('O mne (Detail)')
               .id('aboutSection')
               .child(S.document().schemaType('aboutSection').documentId('aboutSection')),
+
+            // 2b. NOVO PRIDANÉ: SINGLETON PRE SKRÁTENÉ O MNE (NA DOMOVE)
+            S.listItem()
+              .title('O mne (Skrátené na domove)')
+              .id('aboutShort')
+              .child(S.document().schemaType('aboutShort').documentId('aboutShort')),
 
             // 3. SINGLETON PRE KONTAKTNÚ SEKCIU
             S.listItem()
@@ -61,7 +67,7 @@ export default defineConfig({
 
             // Ostatné dokumenty (napr. Projekty), ktoré nie sú singletony
             ...S.documentTypeListItems().filter(
-              (listItem) => !['homePage', 'siteSettings', 'aboutSection', 'contactSection', 'navbar'].includes(listItem.getId()!)
+              (listItem) => !['homePage', 'siteSettings', 'aboutSection', 'aboutShort', 'contactSection', 'navbar'].includes(listItem.getId()!)
             ),
           ]),
     }),

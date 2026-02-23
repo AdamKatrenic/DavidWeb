@@ -25,6 +25,8 @@ export interface HeroData {
 export interface SiteSettings {
   copyright?: string;
   instagram?: string;
+  facebook?: string;
+  youtube?: string;
   email?: string;
 }
 

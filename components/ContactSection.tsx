@@ -104,6 +104,23 @@ export default function ContactSection({ content, settings }: ContactSectionProp
                   </a>
                 </div>
               )}
+
+              {settings.facebook && (
+                <div>
+                  <a href={settings.facebook} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-2 border border-white/10 rounded-full text-xs tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500">
+                    Facebook
+                  </a>
+                </div>
+              )}
+
+              {settings.youtube && (
+                <div>
+                  <a href={settings.youtube} target="_blank" rel="noopener noreferrer" className="inline-block px-6 py-2 border border-white/10 rounded-full text-xs tracking-widest uppercase hover:bg-white hover:text-black transition-all duration-500">
+                    YouTube
+                  </a>
+                </div>
+              )}
+
             </div>
           </div>
 

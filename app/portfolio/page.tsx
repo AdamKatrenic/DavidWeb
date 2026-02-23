@@ -1,11 +1,8 @@
-import Image from 'next/image';
-import Link from "next/link";
-import { getProjects } from "@/lib/sanity.queries";
-import { urlFor } from "@/app/sanity";
+import { getProjectsByCategory } from "@/lib/sanity.queries";
+import PortfolioClient from "@/components/PortfolioClient";
 
 export const dynamic = "force-dynamic";
 
-// Poriadna definícia typov bez použitia "any"
 interface SanityImage {
   asset?: {
     _ref: string;
@@ -17,71 +14,41 @@ interface SanityImage {
 interface Project {
   _id: string;
   title: string;
-  mainImage: SanityImage; // Tu sme nahradili any
-  slug: {
-    current: string;
-  };
+  mainImage: SanityImage;
+  slug: { current: string };
   category?: string;
 }
 
+interface CategorizedData {
+  [categoryName: string]: Project[];
+}
+
 export default async function PortfolioPage() {
-  // Použijeme "unknown" na premostenie dát z API k nášmu typu
-  const data = await getProjects() as unknown;
-  const projects = data as Project[];
+  const categorizedProjects = await getProjectsByCategory() as CategorizedData;
+
+  const hasProjects = Object.values(categorizedProjects).some(
+    (categoryArray) => Array.isArray(categoryArray) && categoryArray.length > 0
+  );
 
   return (
-    <main className="min-h-screen bg-black pt-32 pb-20 text-white">
+    <main className="min-h-screen bg-black pt-32 pb-40 text-white">
       <div className="max-w-7xl mx-auto px-8">
         
-        <header className="mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase">
+        <header className="mb-32">
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter uppercase italic">
             Portfólio
           </h1>
-          <div className="w-20 h-[1px] bg-zinc-800 mt-6" />
+          <div className="w-24 h-[1px] bg-white mt-8" />
         </header>
 
-        {(!projects || projects.length === 0) ? (
-          <div className="py-20 text-center">
-            <p className="text-zinc-500 uppercase tracking-widest text-[10px]">
-              V Sanity sa nenašli žiadne dáta. Skontroluj, či je projekt PUBLISHED.
+        {!hasProjects ? (
+          <div className="py-20 text-center border-t border-white/5">
+            <p className="text-zinc-600 uppercase tracking-[0.3em] text-[10px]">
+              V databáze neboli nájdené žiadne projekty.
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-            {projects.map((project) => {
-              const slugValue = project.slug?.current;
-              if (!slugValue) return null;
-
-              return (
-                <Link 
-                  href={`/portfolio/${slugValue}`} 
-                  key={project._id} 
-                  className="group block"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-zinc-900 border border-white/5">
-                    {project.mainImage?.asset && (
-                      <Image 
-                        src={urlFor(project.mainImage).width(800).height(1000).url()} 
-                        alt={project.title || "Projekt"}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-110"
-                      />
-                    )}
-                  </div>
-
-                  <div className="mt-6">
-                    <h3 className="text-xs font-bold uppercase tracking-[0.4em]">
-                      {project.title}
-                    </h3>
-                    <p className="text-[8px] text-zinc-600 uppercase tracking-[0.2em] mt-3">
-                      Zobraziť detail projektu
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <PortfolioClient categorizedProjects={categorizedProjects} />
         )}
       </div>
     </main>
