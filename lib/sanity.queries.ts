@@ -90,16 +90,6 @@ export const ABOUT_SHORT_QUERY = defineQuery(`*[_id == "aboutShort"][0] {
 // ✅ Fetch funkcie (exporty ktoré používa appka)
 export const getProjectsBySpecificCategory = (category: string) =>
     client.fetch(projectsByCategoryQuery, { category });
-export const projectsByCategoryQuery = defineQuery(`*[_type == "project" && category == $category] | order(_createdAt desc) {
-  _id,
-  title,
-  mainImage,
-  slug,
-  category
-}`);
-
-export const getProjectsBySpecificCategory = (category: string) => 
-  client.fetch(projectsByCategoryQuery, { category });
 
 export const getProjectsByCategory = () => client.fetch(PROJECTS_BY_CATEGORY_QUERY);
 export const getProjectBySlug = (slug: string) => client.fetch(PROJECT_BY_SLUG_QUERY, { slug });
