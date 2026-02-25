@@ -6,7 +6,7 @@ import "react-day-picker/dist/style.css";
 
 type Props = {
     selectedDate: string; // "YYYY-MM-DD" alebo ""
-    blockedDates: string[]; // zo Sanity: ["2026-03-13", ...]
+    blockedDates: string[]; // zo Sanity: ["2026-03-13", ...].
     onSelect: (ymd: string) => void;
 };
 

@@ -17,7 +17,7 @@ type FormDataType = {
   email: string;
   phone: string;
   location: string;
-  date: string;    // YYYY-MM-DD
+  date: string;    // YYYY-MM-DD...
   message: string;
 };
 

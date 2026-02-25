@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="af13dcba-38ca-4701-9390-ae46bd544a47" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/AvailabilityCalendar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/AvailabilityCalendar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/AvailabilityCalendar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/ContactSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ContactSection.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/sanity.queries.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/sanity.queries.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/studio/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/studio/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/studio/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/studio/schemaTypes/contactSection.ts" beforeDir="false" afterPath="$PROJECT_DIR$/studio/schemaTypes/contactSection.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +100,7 @@
       <workItem from="1771546674077" duration="1119000" />
       <workItem from="1771877399493" duration="3860000" />
       <workItem from="1771968695331" duration="3881000" />
-      <workItem from="1772050300422" duration="6203000" />
+      <workItem from="1772050300422" duration="7581000" />
     </task>
     <servers />
   </component>

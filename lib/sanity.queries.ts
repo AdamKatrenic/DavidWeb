@@ -1,102 +1,102 @@
-// lib/sanity.queries.ts
-import { defineQuery } from "next-sanity";
 import { client } from "@/app/sanity";
+import { defineQuery } from "next-sanity";
 
-// -------------------------
-// PROJECTS
-// -------------------------
-export const PROJECTS_QUERY = defineQuery(`
-*[_type == "project"] | order(_createdAt desc) {
+// ✅ Projekty podľa kategórií (sekcie na domovskej / portfóliu)
+export const PROJECTS_BY_CATEGORY_QUERY = defineQuery(`{
+  "Svadby": *[_type == "project" && category == "wedding"] | order(_createdAt desc) [0...5] {
+    _id, title, mainImage, slug, category
+  },
+  "Stužkové": *[_type == "project" && category == "concert"] | order(_createdAt desc) [0...5] {
+    _id, title, mainImage, slug, category
+  },
+  "Videoklipy": *[_type == "project" && category == "portrait"] | order(_createdAt desc) [0...5] {
+    _id, title, mainImage, slug, category
+  },
+  "Dokumenty": *[_type == "project" && category == "landscape"] | order(_createdAt desc) [0...5] {
+    _id, title, mainImage, slug, category
+  },
+  "Ostatné": *[_type == "project" && !defined(category)] | order(_createdAt desc) [0...5] {
+    _id, title, mainImage, slug, category
+  }
+}`);
+
+export const projectsByCategoryQuery = defineQuery(`*[_type == "project" && category == $category] | order(_createdAt desc) {
   _id,
   title,
   mainImage,
-  "slug": slug.current
-}
-`);
+  slug,
+  category
+}`);
 
-export const PROJECT_BY_SLUG_QUERY = defineQuery(`
-*[_type == "project" && slug.current == $slug][0] {
+export const PROJECT_BY_SLUG_QUERY = defineQuery(`*[_type == "project" && slug.current == $slug][0] {
   _id,
   title,
   description,
   mainImage,
   gallery,
   "slug": slug.current
-}
-`);
+}`);
 
-// -------------------------
-// HERO / SETTINGS / ABOUT
-// -------------------------
-export const HERO_QUERY = defineQuery(`
-*[_type == "homePage"][0] {
+// ✅ Hero query (z branchu) – nech ostane featuredCategories
+export const HERO_QUERY = defineQuery(`*[_type == "homePage"][0] {
   title,
   welcomeText,
-  heroImage
-}
-`);
+  heroImage,
+  featuredCategories[] {
+    title,
+    subtitle,
+    slug,
+    "imageUrl": backgroundImage.asset->url
+  }
+}`);
 
-export const SETTINGS_QUERY = defineQuery(`
-*[_type == "siteSettings"][0] {
+// ✅ Settings (z branchu – podľa _id)
+export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0] {
   copyright,
   instagram,
   facebook,
   youtube,
   email
-}
-`);
+}`);
 
-export const ABOUT_QUERY = defineQuery(`
-*[_type == "aboutSection"][0] {
+export const ABOUT_QUERY = defineQuery(`*[_type == "aboutSection"][0] {
   title,
   aboutImage,
   description
-}
-`);
+}`);
 
-// -------------------------
-// CONTACT ✅ berie singleton _id contactSectionV2 + blockedDates
-// -------------------------
-export const CONTACT_QUERY = defineQuery(`
-*[_id == "contactSectionV2"][0]{
+// ✅ Contact (tvoje – musí byť contactSectionV2 + blockedDates)
+export const CONTACT_QUERY = defineQuery(`*[_id == "contactSectionV2"][0] {
   title,
   text,
   submitButtonText,
   blockedDates
-}
-`);
+}`);
 
-// -------------------------
-// NAVBAR / ABOUT SHORT (singletony)
-// -------------------------
-export const NAVBAR_QUERY = defineQuery(`
-*[_id == "navbar"][0]{
+// ✅ Navbar – nech to berie prvý (ako v branche)
+export const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0] {
   title,
   subtitle
-}
-`);
+}`);
 
-export const ABOUT_SHORT_QUERY = defineQuery(`
-*[_id == "aboutShort"][0]{
+export const ABOUT_SHORT_QUERY = defineQuery(`*[_id == "aboutShort"][0] {
   overline,
   title,
   text,
   image,
   ctaText
-}
-`);
+}`);
 
-// -------------------------
-// EXPORT FUNKCIE (tvoje importy)
-// -------------------------
-export const getProjectsByCategory = () => client.fetch(PROJECTS_QUERY);
+// ✅ Fetch funkcie (exporty ktoré používa appka)
+export const getProjectsBySpecificCategory = (category: string) =>
+    client.fetch(projectsByCategoryQuery, { category });
+
+export const getProjectsByCategory = () => client.fetch(PROJECTS_BY_CATEGORY_QUERY);
 export const getProjectBySlug = (slug: string) => client.fetch(PROJECT_BY_SLUG_QUERY, { slug });
 
 export const getHeroData = () => client.fetch(HERO_QUERY);
-
 export const getSettings = () => client.fetch(SETTINGS_QUERY);
 export const getAboutData = () => client.fetch(ABOUT_QUERY);
 export const getContactData = () => client.fetch(CONTACT_QUERY);
-
 export const getNavbar = () => client.fetch(NAVBAR_QUERY);
 export const getAboutShortData = () => client.fetch(ABOUT_SHORT_QUERY);
