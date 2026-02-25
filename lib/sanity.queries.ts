@@ -31,7 +31,13 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`*[_type == "project" && slug.c
 export const HERO_QUERY = defineQuery(`*[_type == "homePage"][0] {
   title,
   welcomeText,
-  heroImage
+  heroImage,
+  featuredCategories[] {
+    title,
+    subtitle,
+    slug,
+    "imageUrl": backgroundImage.asset->url
+  }
 }`);
 
 export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0] {
@@ -67,7 +73,17 @@ export const ABOUT_SHORT_QUERY = defineQuery(`*[_id == "aboutShort"][0] {
   ctaText
 }`);
 
-// EXPORTY FUNKCIÍ
+export const projectsByCategoryQuery = defineQuery(`*[_type == "project" && category == $category] | order(_createdAt desc) {
+  _id,
+  title,
+  mainImage,
+  slug,
+  category
+}`);
+
+export const getProjectsBySpecificCategory = (category: string) => 
+  client.fetch(projectsByCategoryQuery, { category });
+
 export const getProjectsByCategory = () => client.fetch(PROJECTS_BY_CATEGORY_QUERY);
 export const getProjectBySlug = (slug: string) => client.fetch(PROJECT_BY_SLUG_QUERY, { slug });
 export const getHeroData = () => client.fetch(HERO_QUERY);
