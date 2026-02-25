@@ -7,6 +7,7 @@ export default {
     groups: [
         { name: 'content', title: 'Obsah' },
         { name: 'media', title: 'Vizuál' },
+        { name: 'sections', title: 'Promované kategórie' }, // Nová grupa pre poriadok
     ],
     fields: [
         {
@@ -38,11 +39,60 @@ export default {
                     name: 'alt',
                     type: 'string',
                     title: 'Alternatívny text',
-                    description: 'Dôležité pre Google a slabozrakých (napr. Portrét fotografa v štúdiu).',
+                    description: 'Dôležité pre Google a slabozrakých.',
                 }
             ],
             validation: (rule: Rule) => rule.required(),
         },
+        // --- NOVÁ SEKCIA PRE KATEGÓRIE ---
+        {
+            name: 'featuredCategories',
+            title: 'Promované kategórie',
+            description: 'Pridajte kategórie, ktoré sa zobrazia na hlavnej stránke (napr. Svadby, Stužkové).',
+            type: 'array',
+            group: 'sections',
+            of: [
+                {
+                    type: 'object',
+                    name: 'categoryItem',
+                    title: 'Kategória',
+                    fields: [
+                        { 
+                            name: 'title', 
+                            title: 'Názov kategórie', 
+                            type: 'string', 
+                            description: 'Napr. Svadby' 
+                        },
+                        { 
+                            name: 'subtitle', 
+                            title: 'Podnadpis', 
+                            type: 'string', 
+                            description: 'Napr. Cinematic Wedding Stories' 
+                        },
+                        { 
+                            name: 'slug', 
+                            title: 'URL Slug', 
+                            type: 'string', 
+                            description: 'Musí súhlasiť s kategóriou v systéme (napr. svadby)' 
+                        },
+                        {
+                            name: 'backgroundImage',
+                            title: 'Obrázok na pozadí (voliteľné)',
+                            type: 'image',
+                            options: { hotspot: true },
+                            description: 'Ak nahráte obrázok, zobrazí sa na pozadí sekcie. Ak nie, ostane čistý text.'
+                        }
+                    ],
+                    preview: {
+                        select: {
+                            title: 'title',
+                            subtitle: 'subtitle',
+                            media: 'backgroundImage'
+                        }
+                    }
+                }
+            ]
+        }
     ],
     preview: {
         select: {
