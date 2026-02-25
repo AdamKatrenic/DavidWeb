@@ -3,6 +3,7 @@
 
 import { useState, ChangeEvent } from "react";
 import type { CONTACT_QUERY_RESULT, SETTINGS_QUERY_RESULT } from "@/lib/sanity.types";
+import AvailabilityCalendar from "./AvailabilityCalendar";
 
 interface ContactSectionProps {
   content: CONTACT_QUERY_RESULT;
@@ -16,7 +17,7 @@ type FormDataType = {
   email: string;
   phone: string;
   location: string;
-  date: string; // ✅ nové pole pre datepicker
+  date: string;    // YYYY-MM-DD...
   message: string;
 };
 
@@ -29,7 +30,7 @@ export default function ContactSection({ content, settings }: ContactSectionProp
     email: "",
     phone: "",
     location: "",
-    date: "", // ✅ init
+    date: "",
     message: "",
   });
 
@@ -53,10 +54,13 @@ export default function ContactSection({ content, settings }: ContactSectionProp
       !formData.email.includes("@") ||
       formData.message.trim().length < 5;
 
-  const title: string = content?.title || "Poďme spolu \\n niečo vytvoriť";
+  const title: string = (content as any)?.title || "Poďme spolu \n niečo urobiť";
   const text: string =
-      content?.text || "Máte nápad na fotenie alebo otázky ohľadom spolupráce?";
-  const btnText: string = content?.submitButtonText || "Odoslať dopyt";
+      (content as any)?.text ||
+      "Máte nápad na fotenie alebo otázky ohľadom spolupráce? Napíšte mi prosím";
+  const btnText: string = (content as any)?.submitButtonText || "Odoslať";
+
+  const blockedDates: string[] = (content as any)?.blockedDates ?? [];
 
   const fields: { label: string; name: keyof FormDataType; type: string; placeholder: string }[] = [
     { label: "Meno *", name: "name", type: "text", placeholder: "Vaše meno" },
@@ -76,7 +80,7 @@ export default function ContactSection({ content, settings }: ContactSectionProp
       const res: Response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData), // ✅ date sa pošle automaticky
+        body: JSON.stringify(formData),
       });
 
       if (!res.ok) throw new Error("send_failed");
@@ -87,7 +91,7 @@ export default function ContactSection({ content, settings }: ContactSectionProp
         email: "",
         phone: "",
         location: "",
-        date: "", // ✅ reset
+        date: "",
         message: "",
       });
     } catch {
@@ -180,7 +184,7 @@ export default function ContactSection({ content, settings }: ContactSectionProp
                       </label>
                       <input
                           name={f.name}
-                          value={formData[f.name]}
+                          value={formData[f.name] as string}
                           onChange={handleChange}
                           className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light"
                           type={f.type}
@@ -189,19 +193,28 @@ export default function ContactSection({ content, settings }: ContactSectionProp
                     </div>
                 ))}
 
-                {/* ✅ DATEPICKER */}
-                <div className="relative group">
+                {/* REACT KALENDÁR */}
+                <div className="md:col-span-2 relative group">
                   <label className="text-[10px] tracking-[0.2em] uppercase text-zinc-500 transition-colors group-focus-within:text-white">
                     Preferovaný dátum fotenia
                   </label>
-                  <input
-                      name="date"
-                      type="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      min={new Date().toISOString().split("T")[0]} // dnešok a ďalej
-                      className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors text-sm font-light text-zinc-300 [color-scheme:dark]"
-                  />
+
+                  <div className="mt-3">
+                    <AvailabilityCalendar
+                        selectedDate={formData.date}
+                        blockedDates={blockedDates}
+                        onSelect={(ymd) => {
+                          setFormData((prev) => ({ ...prev, date: ymd }));
+                          if (status) setStatus(null);
+                        }}
+                    />
+                  </div>
+
+                  {formData.date && (
+                      <p className="mt-2 text-[11px] text-zinc-400">
+                        Vybraný termín: <span className="text-zinc-200">{formData.date}</span>
+                      </p>
+                  )}
                 </div>
 
                 <div className="md:col-span-2 relative group">
@@ -238,7 +251,6 @@ export default function ContactSection({ content, settings }: ContactSectionProp
                     )}
                   </button>
 
-                  {/* VIZUÁLNE STATUSY */}
                   <div className="overflow-hidden w-full">
                     {status === "ok" && (
                         <div className="flex items-center gap-2 text-green-400 text-[11px] uppercase tracking-widest animate-in slide-in-from-left duration-500">
