@@ -1,3 +1,4 @@
+// AvailabilityCalendar.tsx
 "use client";
 
 import { useMemo, useState } from "react";
@@ -19,6 +20,11 @@ function toYMDLocal(date: Date): string {
 
 function addMonthsSafe(base: Date, delta: number): Date {
     return new Date(base.getFullYear(), base.getMonth() + delta, 1);
+}
+
+// TS nechce null => vráť prázdny element
+function EmptyNav() {
+    return <></>;
 }
 
 export default function AvailabilityCalendar({ selectedDate, blockedDates, onSelect }: Props) {
@@ -80,13 +86,13 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
                             "bg-zinc-500/20 text-zinc-500 border border-zinc-500/20 line-through cursor-not-allowed",
                     }}
                     components={{
-                        Nav: () => null,
+                        Nav: EmptyNav,
                     }}
                     classNames={{
                         months: "flex justify-center",
                         month: "space-y-4",
                         caption: "flex items-center justify-center px-1",
-                        caption_label: "text-sm font-semibold text-white w-full text-left pl-[12px]",
+                        caption_label: "text-sm font-semibold text-white w-full text-left pl-[30px]",
 
                         table: "w-fit border-collapse",
                         head_row: "flex",
