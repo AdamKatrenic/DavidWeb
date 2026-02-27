@@ -1,6 +1,5 @@
-import type { Rule } from "sanity";
-
-//look for inferring interface/type from schema
+import { Rule } from "sanity";
+import { PlayIcon, ImageIcon } from '@sanity/icons' // Ak máš nainštalované icons, ak nie, nevadí
 
 export default {
   name: 'project',
@@ -19,7 +18,7 @@ export default {
       title: 'Slug (Adresa v prehliadači)',
       type: 'slug',
       options: {
-        source: 'title', // Automaticky vygeneruje slug z názvu
+        source: 'title',
         maxLength: 96,
       },
       validation: (rule: Rule) => rule.required(),
@@ -31,25 +30,63 @@ export default {
       options: {
         list: [
           { title: 'Svadba', value: 'wedding' },
-          { title: 'Stužkové', value: 'concert' },
-          { title: 'Videoklipy', value: 'portrait' },
-          { title: 'Dokumenty', value: 'landscape' },
+          { title: 'Stužkové', value: 'prom' }, 
+          { title: 'Videoklipy', value: 'music-video' },
+          { title: 'Dokumenty', value: 'documentary' },
+          { title: 'Ostatné', value: 'other' },
         ],
       },
     },
     {
       name: 'mainImage',
-      title: 'Hlavná fotka',
+      title: 'Hlavná fotka (Thumbnail)',
       type: 'image',
-      options: {
-        hotspot: true, // Umožňuje orezávať fotku priamo v prehliadači
-      },
+      options: { hotspot: true },
+      description: 'Táto fotka sa zobrazí v prehľade projektov.',
     },
     {
       name: 'gallery',
-      title: 'Galéria fotiek',
+      title: 'Obsah projektu (Galéria a Videá)',
       type: 'array',
-      of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Tu môžete pridávať fotky alebo YouTube videá v ľubovoľnom poradí.',
+      of: [
+        { 
+          type: 'image', 
+          title: 'Fotografia',
+          icon: ImageIcon,
+          options: { hotspot: true } 
+        },
+        {
+          type: 'object',
+          name: 'youtubeVideo',
+          title: 'YouTube Video',
+          icon: PlayIcon,
+          fields: [
+            {
+              name: 'url',
+              type: 'url',
+              title: 'YouTube URL odkaz',
+              description: 'Príklad: https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Krátky popis pod video (voliteľné)'
+            }
+          ],
+          preview: {
+            select: {
+              url: 'url',
+            },
+            prepare({ url }: { url: string }) {
+              return {
+                title: 'YouTube Video',
+                subtitle: url || 'Chýba odkaz',
+              }
+            },
+          },
+        },
+      ],
     },
     {
       name: 'description',

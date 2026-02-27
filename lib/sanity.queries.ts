@@ -1,21 +1,20 @@
 import { client } from "@/app/sanity";
 import { defineQuery } from "next-sanity";
 
-// ✅ Projekty podľa kategórií (sekcie na domovskej / portfóliu)
 export const PROJECTS_BY_CATEGORY_QUERY = defineQuery(`{
   "Svadby": *[_type == "project" && category == "wedding"] | order(_createdAt desc) [0...5] {
     _id, title, mainImage, slug, category
   },
-  "Stužkové": *[_type == "project" && category == "concert"] | order(_createdAt desc) [0...5] {
+  "Stužkové": *[_type == "project" && category == "prom"] | order(_createdAt desc) [0...5] {
     _id, title, mainImage, slug, category
   },
-  "Videoklipy": *[_type == "project" && category == "portrait"] | order(_createdAt desc) [0...5] {
+  "Videoklipy": *[_type == "project" && category == "music-video"] | order(_createdAt desc) [0...5] {
     _id, title, mainImage, slug, category
   },
-  "Dokumenty": *[_type == "project" && category == "landscape"] | order(_createdAt desc) [0...5] {
+  "Dokumenty": *[_type == "project" && category == "documentary"] | order(_createdAt desc) [0...5] {
     _id, title, mainImage, slug, category
   },
-  "Ostatné": *[_type == "project" && !defined(category)] | order(_createdAt desc) [0...5] {
+  "Ostatné": *[_type == "project" && category == "other"] | order(_createdAt desc) [0...5] {
     _id, title, mainImage, slug, category
   }
 }`);
@@ -28,16 +27,23 @@ export const projectsByCategoryQuery = defineQuery(`*[_type == "project" && cate
   category
 }`);
 
+// ✅ Detail projektu - pridaný gallery pre obrázky aj videá
 export const PROJECT_BY_SLUG_QUERY = defineQuery(`*[_type == "project" && slug.current == $slug][0] {
   _id,
   title,
   description,
   mainImage,
-  gallery,
+  gallery[] {
+    ...,
+    _type == "youtubeVideo" => {
+      url,
+      caption
+    }
+  },
   "slug": slug.current
 }`);
 
-// ✅ Hero query (z branchu) – nech ostane featuredCategories
+// ✅ Hero query
 export const HERO_QUERY = defineQuery(`*[_type == "homePage"][0] {
   title,
   welcomeText,
@@ -50,7 +56,7 @@ export const HERO_QUERY = defineQuery(`*[_type == "homePage"][0] {
   }
 }`);
 
-// ✅ Settings (z branchu – podľa _id)
+// ✅ Settings
 export const SETTINGS_QUERY = defineQuery(`*[_id == "siteSettings"][0] {
   copyright,
   instagram,
@@ -65,7 +71,7 @@ export const ABOUT_QUERY = defineQuery(`*[_type == "aboutSection"][0] {
   description
 }`);
 
-// ✅ Contact (tvoje – musí byť contactSectionV2 + blockedDates)
+// ✅ Contact (V2 s blockedDates)
 export const CONTACT_QUERY = defineQuery(`*[_id == "contactSectionV2"][0] {
   title,
   text,
@@ -73,7 +79,7 @@ export const CONTACT_QUERY = defineQuery(`*[_id == "contactSectionV2"][0] {
   blockedDates
 }`);
 
-// ✅ Navbar – nech to berie prvý (ako v branche)
+// ✅ Navbar
 export const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0] {
   title,
   subtitle
@@ -87,7 +93,6 @@ export const ABOUT_SHORT_QUERY = defineQuery(`*[_id == "aboutShort"][0] {
   ctaText
 }`);
 
-// ✅ Fetch funkcie (exporty ktoré používa appka)
 export const getProjectsBySpecificCategory = (category: string) =>
     client.fetch(projectsByCategoryQuery, { category });
 

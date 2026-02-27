@@ -32,9 +32,10 @@ export default async function CategoryPage({ params }: PageProps) {
   // Mapa kategórií
   const categoryMap: Record<string, { label: string; sanityValue: string }> = {
     "svadby": { label: "Svadby", sanityValue: "wedding" },
-    "stuzkove": { label: "Stužkové", sanityValue: "concert" },
-    "videoklipy": { label: "Videoklipy", sanityValue: "portrait" },
-    "dokumenty": { label: "Dokumenty", sanityValue: "landscape" },
+    "stuzkove": { label: "Stužkové", sanityValue: "prom" },
+    "videoklipy": { label: "Videoklipy", sanityValue: "music-video" },
+    "dokumenty": { label: "Dokumenty", sanityValue: "documentary" },
+    "ostatne": { label: "Ostatné", sanityValue: "other" }, 
   };
 
   const categoryConfig = categoryMap[slug];
