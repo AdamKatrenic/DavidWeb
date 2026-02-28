@@ -41,7 +41,7 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
     });
 
     return (
-        <div className="inline-block w-fit max-w-full rounded-xl border border-white/10 bg-zinc-900/30 p-4">
+        <div className="inline-block w-fit max-w-full ">
             <div className="mb-3 flex flex-wrap gap-3 text-[11px] text-zinc-400">
                 <div className="flex items-center gap-2">
                     <span className="h-3 w-3 rounded bg-green-500/70" />
@@ -54,7 +54,7 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
             </div>
 
             {/* +3px doľava aj doprava */}
-            <div className="w-fit max-w-full px-[3px]">
+            <div className="w-fit max-w-full px-[15px]">
                 <DayPicker
                     mode="single"
                     weekStartsOn={1}
