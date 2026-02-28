@@ -22,7 +22,6 @@ function addMonthsSafe(base: Date, delta: number): Date {
     return new Date(base.getFullYear(), base.getMonth() + delta, 1);
 }
 
-// TS nechce null => vráť prázdny element
 function EmptyNav() {
     return <></>;
 }
@@ -54,7 +53,8 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
                 </div>
             </div>
 
-            <div className="w-fit max-w-full">
+            {/* +3px doľava aj doprava */}
+            <div className="w-fit max-w-full px-[3px]">
                 <DayPicker
                     mode="single"
                     weekStartsOn={1}
@@ -91,16 +91,16 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
                     classNames={{
                         months: "flex justify-center",
                         month: "space-y-4",
-                        caption: "flex items-center justify-center px-1",
+                        caption: "flex items-center justify-center px-3",
                         caption_label: "text-sm font-semibold text-white w-full text-left pl-[30px]",
 
                         table: "w-fit border-collapse",
                         head_row: "flex",
                         head_cell:
-                            "w-10 text-[10px] uppercase tracking-[0.12em] text-zinc-500 font-semibold text-center",
+                            "w-6 text-[10px] uppercase tracking-[0.12em] text-zinc-400 font-semibold text-center",
                         row: "flex w-full mt-2",
-                        cell: "w-10 h-10 p-0 text-center",
-                        day: "w-10 h-10 rounded-lg border border-transparent text-sm font-light text-white hover:bg-white/10 transition",
+                        cell: "w-6 h-6 p-0 text-center",
+                        day: "w-60 h-6 rounded-lg border border-transparent text-sm font-light text-white hover:bg-white/6 transition",
                         day_today: "outline outline-1 outline-white/20 outline-offset-[-2px]",
                         day_outside: "text-zinc-700",
                         day_disabled: "opacity-100",
