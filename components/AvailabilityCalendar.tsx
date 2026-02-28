@@ -92,7 +92,7 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
                         months: "flex justify-center",
                         month: "space-y-4",
                         caption: "flex items-center justify-center px-3",
-                        caption_label: "text-sm font-semibold text-white w-full text-left pl-[30px]",
+                        caption_label: "text-sm font-semibold text-white w-full text-left pl-[10px]",
 
                         table: "w-fit border-collapse",
                         head_row: "flex",
