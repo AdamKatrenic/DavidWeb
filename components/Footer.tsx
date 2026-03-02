@@ -32,6 +32,7 @@ export default function Footer({ settings }: FooterProps) {
     <footer className="bg-black py-20 border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
         
+        {/* Sociálne siete a kontakt */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 mb-16 text-center">
           {settings.instagram && (
             <Link 
@@ -83,12 +84,20 @@ export default function Footer({ settings }: FooterProps) {
           </button>
         </div>
 
-        <div className="flex flex-col items-center gap-4">
+        {/* Copyright a Právne info */}
+        <div className="flex flex-col items-center gap-6">
           <p className="text-[9px] tracking-[0.5em] text-zinc-700 uppercase">
             © {currentYear} {settings.copyright || "David Pilar Studio"}
           </p>
           
-          <div className="w-12 h-[1px] bg-zinc-800 mt-4" />
+          <div className="w-12 h-[1px] bg-zinc-800" />
+
+          <Link 
+            href="/privacy" 
+            className="text-[8px] tracking-[0.3em] text-zinc-800 hover:text-zinc-500 transition-colors uppercase font-medium"
+          >
+            Ochrana osobných údajov
+          </Link>
         </div>
       </div>
     </footer>
