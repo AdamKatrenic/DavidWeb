@@ -64,9 +64,9 @@ export default function AvailabilityCalendar({
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: "20px",
         padding: "28px 32px 24px",
-        width: "fit-content",
-        minWidth: "360px",
-        maxWidth: "100%",
+        width: "100%",
+        maxWidth: "420px",
+        boxSizing: "border-box",
         boxShadow:
           "0 0 0 1px rgba(16,185,129,0.04), 0 32px 64px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4)",
         position: "relative",
@@ -165,12 +165,13 @@ export default function AvailabilityCalendar({
 
       {/* Calendar */}
       <style>{`
-        .rdp-custom .rdp-months { justify-content: center; }
-        .rdp-custom .rdp-month { }
+        .rdp-custom .rdp-months { justify-content: center; width: 100%; }
+        .rdp-custom .rdp-month { width: 100%; }
         .rdp-custom .rdp-caption { display: none; }
-        .rdp-custom .rdp-head_row { display: flex; gap: 5px; margin-bottom: 6px; }
+        .rdp-custom .rdp-head_row { display: flex; gap: 4px; margin-bottom: 6px; width: 100%; }
         .rdp-custom .rdp-head_cell {
-          width: 44px;
+          flex: 1;
+          min-width: 0;
           text-align: center;
           font-size: 10px;
           font-weight: 700;
@@ -179,11 +180,11 @@ export default function AvailabilityCalendar({
           color: rgba(255,255,255,0.2);
           padding: 0;
         }
-        .rdp-custom .rdp-tbody { display: flex; flex-direction: column; gap: 4px; }
-        .rdp-custom .rdp-row { display: flex; gap: 5px; }
-        .rdp-custom .rdp-cell { width: 44px; height: 40px; padding: 0; text-align: center; }
+        .rdp-custom .rdp-tbody { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+        .rdp-custom .rdp-row { display: flex; gap: 4px; width: 100%; }
+        .rdp-custom .rdp-cell { flex: 1; min-width: 0; height: 40px; padding: 0; text-align: center; }
         .rdp-custom .rdp-button {
-          width: 44px !important;
+          width: 100% !important;
           height: 40px !important;
           border-radius: 10px;
           font-size: 13px;
@@ -246,10 +247,19 @@ export default function AvailabilityCalendar({
           font-weight: 700 !important;
           box-shadow: 0 0 24px rgba(16,185,129,0.45), 0 4px 12px rgba(0,0,0,0.3) !important;
         }
-        /* Remove default rdp focus ring */
+        /* Remove blue focus ring */
+        .rdp-custom .rdp-button:focus,
         .rdp-custom .rdp-button:focus-visible {
-          outline: 2px solid rgba(16,185,129,0.5);
-          outline-offset: 2px;
+          outline: none !important;
+          box-shadow: none !important;
+        }
+        /* Mobile */
+        @media (max-width: 480px) {
+          .rdp-custom .rdp-cell { height: 34px; }
+          .rdp-custom .rdp-button { height: 34px !important; font-size: 12px !important; border-radius: 8px !important; }
+          .rdp-custom .rdp-head_row { gap: 3px; }
+          .rdp-custom .rdp-row { gap: 3px; }
+          .rdp-custom .rdp-tbody { gap: 3px; }
         }
       `}</style>
 
