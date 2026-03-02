@@ -97,7 +97,7 @@ export default function AvailabilityCalendar({ selectedDate, blockedDates, onSel
                         table: "w-fit border-collapse",
                         head_row: "flex",
                         head_cell:
-                            "w-6 text-[10px] uppercase tracking-[0.12em] text-zinc-400 font-semibold text-center",
+                            "w-6 text-[10px] uppercase tracking-[0.12em] text-zinc-400 font-semibold text-left",
                         row: "flex w-full mt-2",
                         cell: "w-6 h-6 p-0 text-center",
                         day: "w-60 h-6 rounded-lg border border-transparent text-sm font-light text-white hover:bg-white/6 transition",
