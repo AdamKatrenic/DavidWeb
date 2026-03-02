@@ -6,8 +6,9 @@ import type {
   SETTINGS_QUERY_RESULT,
 } from "@/lib/sanity.types";
 import AvailabilityCalendar from "./AvailabilityCalendar";
+import Link from "next/link"; // Pridaný import pre odkaz
 
-// Rozšírenie typu pre Sanity dáta
+// ... (typy zostávajú rovnaké)
 type ExtendedContactContent = CONTACT_QUERY_RESULT & {
   title?: string | null;
   text?: string | null;
@@ -174,10 +175,10 @@ export default function ContactSection({
           </div>
 
           {/* Pravá strana (Formulár) */}
-          <div className="lg:col-span-7 bg-zinc-900/30 p-8 md:p-12 rounded-3xl border border-white/5 shadow-2xl">
+          <div className="lg:col-span-7 bg-zinc-900/30 p-8 md:p-12 rounded-3xl border border-white/5 shadow-2xl text-left">
             <form
               onSubmit={onSubmit}
-              className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 text-left"
+              className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10"
             >
               {fields.map((f) => (
                 <div key={f.name} className="relative">
@@ -188,14 +189,14 @@ export default function ContactSection({
                     name={f.name}
                     value={formData[f.name]}
                     onChange={handleChange}
-                    className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light"
+                    className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light text-left"
                     type={f.type}
                     placeholder={f.placeholder}
                   />
                 </div>
               ))}
 
-              <div className="md:col-span-2 text-left">
+              <div className="md:col-span-2">
                 <label className="text-[10px] tracking-[0.2em] uppercase text-zinc-500 font-bold italic">
                   Preferovaný dátum fotenia
                 </label>
@@ -219,12 +220,23 @@ export default function ContactSection({
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light min-h-[120px] resize-none"
+                  className="mt-2 w-full bg-transparent border-b border-white/10 py-2 outline-none focus:border-white transition-colors placeholder:text-zinc-800 text-sm font-light min-h-[120px] resize-none text-left"
                   placeholder="Napíšte mi viac o vašej predstave..."
                 />
               </div>
 
-              <div className="md:col-span-2 pt-6 flex flex-col items-center md:items-start gap-6">
+              {/* SEKČIA OCHRANA ÚDAJOV */}
+              <div className="md:col-span-2">
+                <p className="text-[10px] text-zinc-600 font-light leading-relaxed tracking-wide">
+                  Odoslaním formulára beriete na vedomie, že vaše údaje budú spracované výhradne za účelom 
+                  odpovede na váš dopyt v súlade so 
+                  <Link href="/privacy" className="underline hover:text-zinc-400 ml-1 transition-colors">
+                    zásadami ochrany osobných údajov
+                  </Link>.
+                </p>
+              </div>
+
+              <div className="md:col-span-2 pt-2 flex flex-col items-center md:items-start gap-6">
                 <button
                   type="submit"
                   disabled={loading || isFormInvalid}
@@ -238,7 +250,7 @@ export default function ContactSection({
                     {loading ? "Odosielam..." : btnText}
                   </span>
                   {!isFormInvalid && !loading && (
-                    <span className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block">
+                    <span className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 hidden md:block text-base">
                       →
                     </span>
                   )}
@@ -268,7 +280,7 @@ export default function ContactSection({
   );
 }
 
-// Pomocný malý komponent pre linky sociálnych sietí
+// ... (SocialLink komponent zostáva rovnaký)
 function SocialLink({ href, label }: { href: string; label: string }) {
   return (
     <a
