@@ -151,31 +151,23 @@ export default function AvailabilityCalendar({
 
       {/* Calendar */}
       <style>{`
+        .rdp-custom *, .rdp-custom *::before, .rdp-custom *::after { box-sizing: border-box; }
         .rdp-custom { width: 100%; }
-        .rdp-custom .rdp { margin: 0; padding: 0; width: 100%; }
-        .rdp-custom .rdp-months { justify-content: flex-start; width: 100%; }
-        .rdp-custom .rdp-month { width: 100%; }
+        .rdp-custom .rdp { margin: 0 !important; padding: 0 !important; width: 100%; }
+        .rdp-custom .rdp-months { justify-content: flex-start; width: 100%; margin: 0 !important; padding: 0 !important; }
+        .rdp-custom .rdp-month { width: 100%; margin: 0 !important; padding: 0 !important; }
         .rdp-custom .rdp-month_caption,
         .rdp-custom .rdp-caption,
         .rdp-custom [class*="caption"] { display: none !important; }
-        .rdp-custom table { width: 100%; border-collapse: collapse; margin: 0; padding: 0; }
-        .rdp-custom .rdp-head_row { display: flex; gap: 5px; margin-bottom: 6px; width: 100%; }
+        .rdp-custom table { width: 100%; border-collapse: collapse; margin: 0 !important; padding: 0 !important; table-layout: fixed; }
+        .rdp-custom th, .rdp-custom td { padding: 0 !important; margin: 0 !important; text-align: center !important; }
+        .rdp-custom .rdp-cell { flex: 1; min-width: 0; height: 40px; padding: 0; text-align: center; display: flex; align-items: center; justify-content: center; }
+        .rdp-custom .rdp-head_cell { flex: 1; min-width: 0; text-align: left; display: flex; align-items: center; justify-content: flex-start; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); padding: 0; }
         .rdp-custom .rdp-weekdays,
-        .rdp-custom .rdp-weeks { width: 100%; }
-        .rdp-custom .rdp-head_cell {
-          flex: 1;
-          min-width: 0;
-          text-align: center;
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.2);
-          padding: 0;
-        }
+        .rdp-custom .rdp-weeks { width: 100%; margin: 0 !important; padding: 0 !important; }
+        .rdp-custom .rdp-head_row { display: flex; gap: 5px; margin-bottom: 6px; width: 100%; padding: 0 !important; }
         .rdp-custom .rdp-tbody { display: flex; flex-direction: column; gap: 4px; width: 100%; }
         .rdp-custom .rdp-row { display: flex; gap: 5px; width: 100%; }
-        .rdp-custom .rdp-cell { flex: 1; min-width: 0; height: 40px; padding: 0; text-align: center; }
         .rdp-custom .rdp-button {
           width: 100% !important;
           height: 40px !important;
@@ -248,7 +240,7 @@ export default function AvailabilityCalendar({
         }
       `}</style>
 
-      <div className="rdp-custom" style={{ marginLeft: "-16px", paddingLeft: 0 }}>
+      <div className="rdp-custom" style={{ marginLeft: 0, paddingLeft: 0 }}>
         <DayPicker
           mode="single"
           weekStartsOn={1}
