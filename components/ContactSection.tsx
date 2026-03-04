@@ -200,7 +200,8 @@ export default function ContactSection({
                 <label className="text-[10px] tracking-[0.2em] uppercase text-zinc-500 font-bold italic">
                   Preferovaný dátum fotenia
                 </label>
-                <div className="mt-4">
+                {/* ↓ THE FIX: w-full so calendar doesn't float, max-w-[420px] matches calendar's own maxWidth */}
+                <div className="mt-4 w-full">
                   <AvailabilityCalendar
                     selectedDate={formData.date}
                     blockedDates={blockedDates}
