@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy | Dávid",
+  title: "Ochrana osobných údajov",
   robots: "noindex, follow",
 };
 
@@ -15,7 +15,7 @@ export default function PrivacyPolicy() {
           className="text-[11px] uppercase tracking-[0.4em] text-zinc-500 hover:text-emerald-500 transition-all flex items-center gap-3 mb-20 group font-bold"
         >
           <span className="text-xl leading-none group-hover:-translate-x-2 transition-transform">‹</span> 
-          Späť na hlvnú stránku
+          Späť na hlavnú stránku
         </Link>
 
         <header className="mb-24 border-b border-white/10 pb-16">
@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
               Meno, Email, Telefón a detaily vašej predstavy o fotení.
             </p>
             <p className="text-zinc-500 text-sm leading-relaxed">
-              Spracúvam len to, čo mi sami napíšete do formulára. Nič viac, nič menej.
+              Spracúvam len to, čo mi sami napíšete do formulára. Nič viac, nič menej. Web taktiež využíva nevyhnutné technické súbory cookies pre správne fungovanie stránky.
             </p>
           </section>
 
